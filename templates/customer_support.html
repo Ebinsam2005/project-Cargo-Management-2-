@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - CargoPro</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Customer Portal</div>
+            <ul class="sidebar-nav">
+               <li ><a href="{{ url_for('customer_dashboard') }}">My Shipments</a></li>
+                <li><a href="{{ url_for('customer_book_cargo') }}">Book New Cargo</a></li>
+                <li > <a href="{{ url_for('customer_view_invoices') }}">View Invoices</a></li>
+                <li class="active"><a href="{{ url_for('customer_support') }}">Support</a></li>
+                <li><a href="{{ url_for('customer_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+            </ul>
+        </aside>
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Customer!</h2>
+                <div class="header-icons">
+                    <span>👤</span>
+                </div>
+            </header>
+            <section class="dashboard-content">
+                <h3>Submit a Support Ticket</h3>
+                <div class="login-form" style="width: auto; max-width: 800px; margin-bottom: 40px;">
+                    <form action="#" method="POST">
+                        <div class="input-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="trackingId">Related Tracking ID (Optional)</label>
+                            <input type="text" id="trackingId" name="trackingId">
+                        </div>
+                        <div class="input-group">
+                            <label for="message">Describe your issue</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button">Submit Ticket</button>
+                    </form>
+                </div>
+
+                <h3>My Support Tickets</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Subject</th>
+                            <th>Date Submitted</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#TKT-005</td>
+                            <td>Delayed Shipment</td>
+                            <td>2025-09-02</td>
+                            <td><span class="status shipped">In Progress</span></td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>#TKT-002</td>
+                            <td>Billing Inquiry</td>
+                            <td>2025-08-15</td>
+                            <td><span class="status delivered">Closed</span></td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

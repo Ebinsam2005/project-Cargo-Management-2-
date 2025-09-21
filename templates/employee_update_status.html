@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Status - CargoPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Employee Portal</div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('employee_dashboard') }}">Assigned Cargo</a></li>
+                <li class="active"><a href="{{ url_for('employee_update_status') }}">Update Status</a></li>
+                <li><a href="{{ url_for('employee_shipment_history') }}">Shipment History</a></li>
+                <li><a href="{{ url_for('customer_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('index') }}">Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Employee!</h2>
+                <div class="header-icons">
+                    <span>👤</span>
+                </div>
+            </header>
+
+            <section class="dashboard-content">
+                <h3>Update Cargo Status</h3>
+
+                <!-- Search form -->
+                <div class="card" style="max-width: 800px; margin-bottom: 20px;">
+                    <h4>Find Shipment</h4>
+                    <form class="tracking-form" method="GET" action="{{ url_for('employee_update_status') }}">
+                        <input type="text" name="tracking_id" placeholder="Enter Tracking ID..." value="{{ booking.tracking_id if booking }}">
+                        <button type="submit" class="cta-button">Find</button>
+                    </form>
+                </div>
+
+                {% if booking %}
+                <!-- Shipment details + update form -->
+                <div class="card" style="max-width: 800px;">
+                    <h4>Updating Status for {{ booking.tracking_id }}</h4>
+                    <p>
+                        <strong>Origin:</strong> {{ booking.origin_city }}<br>
+                        <strong>Destination:</strong> {{ booking.destination_city }}<br>
+                        <strong>Current Status:</strong> 
+                        <span class="status">{{ booking.status }}</span>
+                    </p>
+                    <hr style="margin: 20px 0;">
+
+                    <form method="POST" action="{{ url_for('employee_update_status', booking_id=booking.id) }}">
+                        <div class="input-group">
+                            <label for="status">Set New Status</label>
+                            <select id="status" name="status" required>
+                                <option value="" disabled selected>Choose a new status...</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="dispatched">Dispatched</option>
+                                <option value="in_transit">In Transit</option>
+                                <option value="arrived">Arrived</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="location">Location</label>
+                            <textarea id="location" name="location" rows="2">{{ booking.current_location or '' }}</textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="notes">Notes</label>
+                            <textarea id="notes" name="notes" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" class="cta-button">Submit Update</button>
+                    </form>
+                </div>
+
+                <!-- Show past updates -->
+                {% if updates %}
+                <div class="card" style="max-width: 800px; margin-top: 20px;">
+                    <h4>Tracking History</h4>
+                    <ul>
+                        {% for update in updates %}
+                        <li>
+                            <strong>{{ update.status }}</strong> — {{ update.location }}
+                            {% if update.notes %}<br><em>{{ update.notes }}</em>{% endif %}
+                            <em>({{ update.updated_at }})</em>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% endif %}
+            </section>
+        </main>
+    </div>
+</body>
+</html>

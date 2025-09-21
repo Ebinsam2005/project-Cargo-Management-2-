@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - CargoPro</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Customer Portal</div>
+            <ul class="sidebar-nav">
+                <li ><a href="{{ url_for('customer_dashboard') }}">My Shipments</a></li>
+                <li><a href="{{ url_for('customer_book_cargo') }}">Book New Cargo</a></li>
+                <li > <a href="{{ url_for('customer_view_invoices') }}">View Invoices</a></li>
+                <li ><a href="{{ url_for('customer_support') }}">Support</a></li>
+                <li class="active"><a href="{{ url_for('customer_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </aside>
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Customer!</h2>
+                <div class="header-icons">
+                    <span>👤</span>
+                </div>
+            </header>
+            <section class="dashboard-content">
+                <h3>My Profile</h3>
+                <div style="display: flex; gap: 20px;">
+
+                    <div class="card" style="flex-basis: 50%;">
+                        <h4>Profile Information</h4>
+                        <form>
+                            <div class="input-group">
+                                <label for="fullname">Full Name</label>
+                                <input type="text" id="fullname" name="fullname" value="John Doe" disabled>
+                            </div>
+                            <div class="input-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" value="johndoe" disabled>
+                            </div>
+                            <div class="input-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" value="john.doe@example.com" disabled>
+                            </div>
+                            <button type="button" class="cta-button" onclick="alert('Edit functionality requires backend integration.')">Edit Profile</button>
+                        </form>
+                    </div>
+
+                    <div class="card" style="flex-basis: 50%;">
+                        <h4>Change Password</h4>
+                        <form>
+                            <div class="input-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" name="current-password" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" name="new-password" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="confirm-password">Confirm New Password</label>
+                                <input type="password" id="confirm-password" name="confirm-password" required>
+                            </div>
+                            <button type="submit" class="cta-button">Update Password</button>
+                        </form>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

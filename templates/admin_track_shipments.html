@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Shipments - CargoPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Admin Panel</div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('admin_manage_customers') }}">Manage Customers</a></li>
+                <li><a href="{{ url_for('admin_manage_employees') }}">Manage Employees</a></li>
+                <li><a href="{{ url_for('admin_manage_cargo') }}">Manage Cargo</a></li>
+                <li class="active"><a href="{{ url_for('admin_track_shipments') }}">Track Shipments</a></li>
+                <li><a href="{{ url_for('admin_generate_reports') }}">Generate Reports</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Admin!</h2>
+                <div class="header-icons">
+                    <span>🔔</span>
+                    <span>👤</span>
+                </div>
+            </header>
+
+            <section class="dashboard-content">
+                <h3>Track a Shipment</h3>
+
+                <!-- ✅ Fixed form -->
+                <form method="POST" class="tracking-form">
+                    <input type="text" name="tracking_id" placeholder="Enter Tracking ID (e.g., BK1023)" required>
+                    <button type="submit" class="cta-button">Track</button>
+                </form>
+
+                {% if tracking_info %}
+                <div class="card" id="tracking-results">
+                    <h4>Shipment Details for {{ tracking_info.tracking_id }}</h4>
+                    <div style="padding: 10px 0;">
+                        <strong>Customer:</strong> {{ tracking_info.customer }}<br>
+                        <strong>Origin:</strong> {{ tracking_info.sender_address }}<br>
+                        <strong>Destination:</strong> {{ tracking_info.recipient_address }}<br>
+                        <strong>Current Status:</strong>
+                        <span class="status {{ tracking_info.status|lower }}">
+                            {{ tracking_info.status }}
+                        </span>
+                    </div>
+
+                    <hr style="margin: 20px 0;">
+
+                    <h4>Shipment History</h4>
+                    <ul class="shipment-timeline">
+                        {% for update in tracking_updates %}
+                        <li>
+                            <strong>{{ update.status }}</strong>
+                            <p>Location: {{ update.location }}</p>
+                            <p>{{ update.notes }}</p>
+                            <p class="time">{{ update.updated_at }}</p>
+                        </li>
+                        {% else %}
+                        <li>No tracking updates available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Customer - CargoPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <h2>Customer Details</h2>
+            <p><strong>ID:</strong> #CUST{{ customer.id }}</p>
+            <p><strong>Full Name:</strong> {{ customer.fullname }}</p>
+            <p><strong>Username:</strong> {{ customer.username }}</p>
+            <p><strong>Email:</strong> {{ customer.email }}</p>
+            <p><strong>Phone:</strong> {{ customer.phone or '-' }}</p>
+            <p><strong>Address:</strong> {{ customer.address or '-' }}</p>
+            <p><strong>Status:</strong> {{ customer.status }}</p>
+            <p><strong>Registered On:</strong> {{ customer.created_at }}</p>
+
+            <a href="{{ url_for('admin_manage_customers') }}">⬅ Back to Customers</a>
+        </main>
+    </div>
+</body>
+</html>

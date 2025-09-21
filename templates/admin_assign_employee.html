@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assign Employee</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-form">
+      <h2>Assign Employee - Booking #{{ booking.id }}</h2>
+      <form method="POST">
+        <div class="input-group">
+          <label for="employee_id">Select Employee:</label>
+          <select name="employee_id" id="employee_id" required>
+            {% for emp in employees %}
+              <option value="{{ emp.employee_id }}"
+                {% if booking.assigned_employee_id == emp.employee_id %}selected{% endif %}>
+                {{ emp.employee_code }} - {{ emp.full_name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="cta-button">Assign</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

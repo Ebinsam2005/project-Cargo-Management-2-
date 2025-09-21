@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Status</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-form">
+      <h2>Update Status - Booking #{{ booking.id }}</h2>
+      <form method="POST">
+        <div class="input-group">
+          <label for="status">Select Status:</label>
+          <select name="status" id="status">
+            <option value="pending" {% if booking.status=='pending' %}selected{% endif %}>Pending</option>
+            <option value="confirmed" {% if booking.status=='confirmed' %}selected{% endif %}>Confirmed</option>
+            <option value="in_transit" {% if booking.status=='in_transit' %}selected{% endif %}>In Transit</option>
+            <option value="delivered" {% if booking.status=='delivered' %}selected{% endif %}>Delivered</option>
+            <option value="cancelled" {% if booking.status=='cancelled' %}selected{% endif %}>Cancelled</option>
+          </select>
+        </div>
+        <button type="submit" class="cta-button">Update</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

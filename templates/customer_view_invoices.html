@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Invoices - CargoPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Simple button styles */
+        .btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .btn-download {
+            background: #007bff;
+            color: #fff;
+        }
+        .btn-download:hover {
+            background: #0056b3;
+        }
+        .btn-pay {
+            background: #28a745;
+            color: #fff;
+        }
+        .btn-pay:hover {
+            background: #1e7e34;
+        }
+        .btn-disabled {
+            background: #ccc;
+            color: #666;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Customer Portal</div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('customer_dashboard') }}">My Shipments</a></li>
+                <li><a href="{{ url_for('customer_book_cargo') }}">Book New Cargo</a></li>
+                <li class="active"><a href="{{ url_for('customer_view_invoices') }}">View Invoices</a></li>
+                <li><a href="{{ url_for('customer_support') }}">Support</a></li>
+                <li><a href="{{ url_for('customer_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Customer!</h2>
+                <div class="header-icons">
+                    <span>👤</span>
+                </div>
+            </header>
+
+            <section class="dashboard-content">
+                <h3>My Invoices</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Invoice ID</th>
+                            <th>Tracking ID</th>
+                            <th>Amount</th>
+                            <th>Date Issued</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if invoices %}
+                            {% for inv in invoices %}
+                                <tr>
+                                    <td>#INV-{{ inv.id }}</td>
+                                    <td>{{ inv.booking_id }}</td>
+                                    <td>${{ "%.2f"|format(inv.amount) }}</td>
+                                    <td>{{ inv.issued_at.strftime("%Y-%m-%d") if inv.issued_at else "N/A" }}</td>
+                                    <td>
+                                        {% if inv.status == "paid" %}
+                                            <span class="status delivered">Paid</span>
+                                        {% elif inv.status == "pending" %}
+                                            <span class="status pending">Unpaid</span>
+                                        {% elif inv.status == "overdue" %}
+                                            <span class="status cancelled">Overdue</span>
+                                        {% else %}
+                                            <span class="status cancelled">Cancelled</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if inv.status == "paid" %}
+                                            <a href="{{ url_for('customer_download_invoice', invoice_id=inv.id) }}" class="btn btn-download">Download</a>
+                                        {% elif inv.status == "pending" %}
+                                            <a href="{{ url_for('customer_pay_invoice', invoice_id=inv.id) }}" class="btn btn-pay">Pay Now</a>
+                                        {% else %}
+                                            <span class="btn btn-disabled">N/A</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">No invoices found.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

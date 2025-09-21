@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - CargoPro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Admin Panel</div>
+      <ul class="sidebar-nav">
+        <li class="active"><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('admin_manage_customers') }}">Manage Customers</a></li>
+        <li><a href="{{ url_for('admin_manage_employees') }}">Manage Employees</a></li>
+        <li><a href="{{ url_for('admin_manage_cargo') }}">Manage Cargo</a></li>
+        <li><a href="{{ url_for('admin_track_shipments') }}">Track Shipments</a></li>
+        <li><a href="{{ url_for('admin_generate_reports') }}">Generate Reports</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+    <main class="dashboard-main">
+      <header class="dashboard-header">
+        <h2>Welcome, Admin!</h2>
+        <div class="header-icons">
+          <span>🔔</span>
+          <span>👤</span>
+        </div>
+      </header>
+
+      <section class="dashboard-content">
+        <h3>System Overview</h3>
+        <div class="stat-cards">
+          <div class="card"><h4>Total Shipments</h4><p>{{ bookings }}</p></div>
+          <div class="card"><h4>Registered Customers</h4><p>{{ customers }}</p></div>
+          <div class="card"><h4>Active Employees</h4><p>{{ employees }}</p></div>
+        </div>
+
+        <h3>Recent Bookings (View Only)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Customer</th>
+              <th>Destination</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if bookings_list %}
+              {% for booking in bookings_list %}
+              <tr>
+                <td>#{{ booking.id }}</td>
+                <td>{{ booking.username }}</td>
+                <td>{{ booking.destination_city or 'N/A' }}</td>
+                <td><span class="status {{ booking.status }}">{{ booking.status }}</span></td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr><td colspan="4">No recent bookings available.</td></tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Employees - CargoPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Admin Panel</div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('admin_manage_customers') }}">Manage Customers</a></li>
+                <li class="active"><a href="{{ url_for('admin_manage_employees') }}">Manage Employees</a></li>
+                <li><a href="{{ url_for('admin_manage_cargo') }}">Manage Cargo</a></li>
+                <li><a href="{{ url_for('admin_track_shipments') }}">Track Shipments</a></li>
+                <li><a href="{{ url_for('admin_generate_reports') }}">Generate Reports</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Admin!</h2>
+                <div class="header-icons">
+                    <span>🔔</span>
+                    <span>👤</span>
+                </div>
+            </header>
+
+            <section class="dashboard-content">
+                <h3>Manage Employee Accounts</h3>
+                <div style="margin-bottom: 20px;">
+                    <a href="{{ url_for('admin_employee_registration') }}" class="cta-button">Add New Employee</a>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Full Name</th>
+                            <th>Email Address</th>
+                            <th>Position</th>
+                            <th>Date Hired</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emp in employees %}
+                        <tr>
+                            <td>#{{ emp.employee_code }}</td>
+                            <td>{{ emp.username }}</td>
+                            <td>{{ emp.email }}</td>
+                            <td>{{ emp.position }}</td>
+                            <td>{{ emp.hire_date }}</td>
+                            <td>
+                                {% if emp.status == "active" %}
+                                    <span class="status delivered">Active</span>
+                                {% else %}
+                                    <span class="status pending">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('edit_employee', employee_code=emp.employee_code) }}">Edit</a> | 
+                                {% if emp.status == "active" %}
+                                    <a href="{{ url_for('deactivate_employee', employee_code=emp.employee_code) }}">Deactivate</a>
+                                {% else %}
+                                    <a href="{{ url_for('activate_employee', employee_code=emp.employee_code) }}">Activate</a>
+                                {% endif %}
+                                | 
+                                <!-- New Assign Button -->
+                                <a href="{{ url_for('admin_assign_employee', booking_id=0) }}?employee_id={{ emp.employee_id }}">Assign</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

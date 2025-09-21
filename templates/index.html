@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">CargoPro</div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Efficient & Reliable Cargo Solutions</h1>
+                <p>Streamlining logistics with technology. Track your shipment, manage bookings, and get real-time updates.</p>
+                <a href="{{ url_for('login') }}"class="cta-button">Get Started</a>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <h2>Our Services</h2>
+            <div class="service-cards">
+                <div class="card">
+                    <h3>Real-Time Tracking</h3>
+                    <p>Monitor your cargo's journey from origin to destination with our live tracking system.</p>
+                </div>
+                <div class="card">
+                    <h3>Online Booking</h3>
+                    <p>Easily book new shipments online through our user-friendly customer portal.</p>
+                </div>
+                <div class="card">
+                    <h3>Secure Management</h3>
+                    <p>A centralized and secure platform for all your shipping and logistics data.</p>
+                </div>
+            </div>
+        </section>
+
+         <section id="about" class="about">
+            <h2>About Us</h2>
+            <p>This Cargo Management System is designed to solve the inefficiencies of traditional, paper-based logistics. Our goal is to increase operational efficiency, reduce errors, and improve customer satisfaction through a centralized, web-based platform. [cite: 30, 32, 36, 38]</p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Cargo Management System.</p>
+    </footer>
+
+</body>
+</html>

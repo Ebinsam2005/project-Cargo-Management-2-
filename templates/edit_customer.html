@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Customer - CargoPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <main class="dashboard-main">
+            <h2>Edit Customer</h2>
+            <form method="POST">
+                <label>Full Name:</label>
+                <input type="text" name="fullname" value="{{ customer.fullname }}" required><br><br>
+
+                <label>Username:</label>
+                <input type="text" name="username" value="{{ customer.username }}" required><br><br>
+
+                <label>Email:</label>
+                <input type="email" name="email" value="{{ customer.email }}" required><br><br>
+
+                <button type="submit">Save Changes</button>
+                <a href="{{ url_for('admin_manage_customers') }}">Cancel</a>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

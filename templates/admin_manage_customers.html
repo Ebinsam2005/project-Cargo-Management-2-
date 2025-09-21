@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Customers - CargoPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Admin Panel</div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                <li class="active"><a href="{{ url_for('admin_manage_customers') }}">Manage Customers</a></li>
+                <li><a href="{{ url_for('admin_manage_employees') }}">Manage Employees</a></li>
+                <li><a href="{{ url_for('admin_manage_cargo') }}">Manage Cargo</a></li>
+                <li><a href="{{ url_for('admin_track_shipments') }}">Track Shipments</a></li>
+                <li><a href="{{ url_for('admin_generate_reports') }}">Generate Reports</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </aside>
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Admin!</h2>
+                <div class="header-icons">
+                    <span>🔔</span>
+                    <span>👤</span>
+                </div>
+            </header>
+            <section class="dashboard-content">
+                <h3>Manage Customer Accounts</h3>
+               <table>
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Full Name</th>
+                        <th>Username</th>
+                        <th>Email Address</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Date Registered</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cust in customers %}
+                    <tr>
+                        <td>#CUST{{ cust.id }}</td>
+                        <td>{{ cust.fullname }}</td>
+                        <td>{{ cust.username }}</td>
+                        <td>{{ cust.email }}</td>
+                        <td>{{ cust.phone or '-' }}</td>
+                        <td>{{ cust.address or '-' }}</td>
+                        <td>{{ cust.created_at.strftime('%Y-%m-%d') if cust.created_at else '-' }}</td>
+                        <td>
+                            {% if cust.status == 'Active' %}
+                                <span class="status delivered">Active</span>
+                            {% else %}
+                                <span class="status pending">Suspended</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('view_customer', id=cust.id) }}">View</a> |
+                            <a href="{{ url_for('edit_customer', id=cust.id) }}">Edit</a> |
+                            {% if cust.status == 'Active' %}
+                                <a href="{{ url_for('suspend_customer', id=cust.id) }}">Suspend</a>
+                            {% else %}
+                                <a href="{{ url_for('activate_customer', id=cust.id) }}">Activate</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

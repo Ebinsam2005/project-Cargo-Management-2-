@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Reports - CargoPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Admin Panel</div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('admin_manage_customers') }}">Manage Customers</a></li>
+                <li><a href="{{ url_for('admin_manage_employees') }}">Manage Employees</a></li>
+                <li><a href="{{ url_for('admin_manage_cargo') }}">Manage Cargo</a></li>
+                <li><a href="{{ url_for('admin_track_shipments') }}">Track Shipments</a></li>
+                <li class="active"><a href="{{ url_for('admin_generate_reports') }}">Generate Reports</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </aside>
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Admin!</h2>
+                <div class="header-icons">
+                    <span>🔔</span>
+                    <span>👤</span>
+                </div>
+            </header>
+            <section class="dashboard-content">
+                <h3>Generate System Reports</h3>
+                <div class="card" style="max-width: 600px;">
+                    <!-- ✅ Point form to Flask route -->
+                    <form action="{{ url_for('admin_generate_reports') }}" method="POST">
+                        <div class="input-group">
+                            <label for="reportType">Select Report Type</label>
+                            <select id="reportType" name="reportType">
+                                <option value="financial">Financial Summary</option>
+                                <option value="operational">Operational Efficiency</option>
+                                <option value="customer">Customer Activity</option>
+                                <option value="shipment">Shipment Volume</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="dateFrom">Date From</label>
+                            <input type="date" id="dateFrom" name="dateFrom" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="dateTo">Date To</label>
+                            <input type="date" id="dateTo" name="dateTo" required>
+                        </div>
+                        <button type="submit" class="cta-button">Generate & Download</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - CargoPro</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">Customer Portal</div>
+             <ul class="sidebar-nav">
+                <li class="active"><a href="{{ url_for('customer_dashboard') }}">My Shipments</a></li>
+                <li><a href="{{ url_for('customer_book_cargo') }}">Book Cargo</a></li>
+                <li><a href="{{ url_for('customer_view_invoices') }}">View Invoices</a></li>
+                <li><a href="{{ url_for('customer_support') }}">Support</a></li>
+                <li><a href="{{ url_for('customer_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+
+        </aside>
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <h2>Welcome, Customer!</h2>
+                <div class="header-icons">
+                    <span>👤</span>
+                </div>
+            </header>
+            <section class="dashboard-content">
+                <h3>Track Your Cargo</h3>
+                <div class="tracking-form">
+                    <input type="text" placeholder="Enter your Tracking ID (e.g., #BK1023)">
+                    <button class="cta-button">Track</button>
+                </div>
+                
+                <h3>My Recent Shipments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tracking ID</th>
+                            <th>Destination</th>
+                            <th>Booking Date</th>
+                            <th>Status</th>
+                            <th>Invoice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for shipment in shipments %}
+                    <tr>
+                        <td>{{ shipment.tracking_id }}</td>
+                        <td>{{ shipment.destination_city }}</td>
+                        <td>{{ shipment.booking_date.strftime('%Y-%m-%d') }}</td>
+                        <td><span class="status {{ shipment.status }}">{{ shipment.status.replace('_', ' ')|title }}</span></td>
+                        <td><a href="#">Download</a></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align: center;">You have no shipments.</td>
+                    </tr>
+                    {% endfor %}
+                     </tbody>
+                   </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
